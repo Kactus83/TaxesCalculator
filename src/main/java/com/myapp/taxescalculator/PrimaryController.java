@@ -1,11 +1,9 @@
 package com.myapp.taxescalculator;
 
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.util.Duration;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
@@ -14,10 +12,10 @@ public class PrimaryController {
 
     @FXML
     private TextField rateTextField;
-    
+
     @FXML
-    private TextField initialValueTextField;  
-    
+    private TextField initialValueTextField;
+
     @FXML
     private Label detailsLabel;
 
@@ -29,6 +27,11 @@ public class PrimaryController {
 
     private Timer rateDelayTimer = null;
     private Timer initialValueDelayTimer = null;
+
+    private static final int RATE_UPDATE_DELAY = 1200;
+    private static final double MIN_RATE = 0.0;
+    private static final double MAX_RATE = 100.0;
+    private static final double MIN_INITIAL_VALUE = 0.0;
 
     @FXML
     public void initialize() {
@@ -66,7 +69,7 @@ public class PrimaryController {
                     processInitialValueChange(newValue);
                 }
             }
-        }, 2000);
+        }, RATE_UPDATE_DELAY);
 
         if (type.equals("rate")) {
             rateDelayTimer = newTimer;
@@ -100,26 +103,30 @@ public class PrimaryController {
     }
 
     private void validateRateAndShowAlert(double rate) {
-        if (rate < 0) {
+        if (rate < MIN_RATE) {
             showAlert("Erreur de taux", "Le taux ne peut pas être négatif !");
-        } else if (rate > 100) {
+        } else if (rate > MAX_RATE) {
             showAlert("Erreur de taux", "Le taux ne peut pas dépasser 100% !");
         }
     }
 
     private void validateInitialValueAndShowAlert(double value) {
-        if (value < 0) {
+        if (value < MIN_INITIAL_VALUE) {
             showAlert("Erreur de valeur", "La valeur initiale ne peut pas être négative !");
         }
     }
 
     private void updateAmount() {
         try {
-            double rate = Double.parseDouble(rateTextField.getText()) / 100; 
+            double rate = Double.parseDouble(rateTextField.getText()) / 100;
             double initialValue = Double.parseDouble(initialValueTextField.getText());
             double amountChange = initialValue * rate;
             double finalAmount;
 
+            // Appliquer le clignotement aux deux labels
+            triggerBlinkAnimation(detailsLabel);
+            triggerBlinkAnimation(finalAmountLabel);
+            
             if (modeToggle.isSelected()) {
                 finalAmount = initialValue - amountChange;
                 detailsLabel.setText(String.format("Montant du discount: %.2f", amountChange));
@@ -127,6 +134,7 @@ public class PrimaryController {
                 finalAmount = initialValue + amountChange;
                 detailsLabel.setText(String.format("Montant de la taxe: %.2f", amountChange));
             }
+
             finalAmountLabel.setText(String.format("Montant final: %.2f", finalAmount));
 
         } catch (NumberFormatException e) {
@@ -136,10 +144,19 @@ public class PrimaryController {
     }
 
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void triggerBlinkAnimation(Label label) {
+        FadeTransition ft = new FadeTransition(Duration.millis(500), label);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.3);
+        ft.setCycleCount(2); // Pour un aller-retour
+        ft.setAutoReverse(true);
+        ft.play();
     }
 }
