@@ -4,15 +4,18 @@
 
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.myapp.taxescalculator.PrimaryController" stylesheets="@styles.css">
     <Label text="Entrez le taux :"/>
-    <TextField fx:id="rateTextField" promptText="Taux"/>
+    <TextField fx:id="rateTextField" promptText="Taux" maxWidth="200.0"/>
     <Label text="Entrez la valeur initiale :"/>
-    <TextField fx:id="initialValueTextField" promptText="Valeur initiale"/>
+    <TextField fx:id="initialValueTextField" promptText="Valeur initiale" maxWidth="200.0"/>
     
     <!-- Toggle for Taxe/Discount -->
     <ToggleButton fx:id="modeToggle" text="Taxe or Discount" selected="true"/>
     
-    <Label text="Détails:"/>
-    <Label fx:id="detailsLabel" text="Les détails seront affichés ici"/>
-    <Label text="Montant Final:"/>
-    <Label fx:id="finalAmountLabel" text="Le montant final sera affiché ici"/>
+    <!-- Div pour les résultats -->
+    <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #333333; -fx-padding: 10px; -fx-border-radius: 10px;">
+        <Label text="Détails:"/>
+        <Label fx:id="detailsLabel" text="Les détails seront affichés ici"/>
+        <Label text="Montant Final:"/>
+        <Label fx:id="finalAmountLabel" text="Le montant final sera affiché ici"/>
+    </VBox>
 </VBox>
