@@ -2,8 +2,6 @@ package com.myapp.taxescalculator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.util.Timer;
@@ -15,32 +13,41 @@ public class PrimaryController {
     @FXML
     private TextField rateTextField;
 
-    // Cette variable stockera le Timer qui est utilisé pour retarder l'alerte.
     private Timer delayTimer = null;
-
 
     @FXML
     public void initialize() {
-        rateTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (delayTimer != null) {
-                delayTimer.cancel();
-            }
+        setupRateTextFieldListener();
+    }
 
-            delayTimer = new Timer();
-            delayTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    Platform.runLater(() -> {  
-                        double rate;
-                        try {
-                            rate = Double.parseDouble(newValue);
-                            validateRateAndShowAlert(rate);
-                        } catch (NumberFormatException e) {
-                            showAlert("Erreur d'entrée", "Veuillez entrer un taux valide.");
-                        }
-                    });
-                }
-            }, 2000);
+    private void setupRateTextFieldListener() {
+        rateTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            startDelayTimer(newValue);
+        });
+    }
+
+    private void startDelayTimer(String newValue) {
+        if (delayTimer != null) {
+            delayTimer.cancel();
+        }
+
+        delayTimer = new Timer();
+        delayTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                processRateChange(newValue);
+            }
+        }, 2000);
+    }
+
+    private void processRateChange(String rateValue) {
+        Platform.runLater(() -> {
+            try {
+                double rate = Double.parseDouble(rateValue);
+                validateRateAndShowAlert(rate);
+            } catch (NumberFormatException e) {
+                showAlert("Erreur d'entrée", "Veuillez entrer un taux valide.");
+            }
         });
     }
 
