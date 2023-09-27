@@ -13,9 +13,9 @@
     
     <!-- Div pour les résultats -->
     <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #333333; -fx-padding: 10px; -fx-border-radius: 10px;">
-        <Label text="Détails:"/>
-        <Label fx:id="detailsLabel" text="Les détails seront affichés ici"/>
-        <Label text="Montant Final:"/>
-        <Label fx:id="finalAmountLabel" text="Le montant final sera affiché ici"/>
+        <Label text="Détails:" style="-fx-font-size: 18px; -fx-text-fill: #FFD700; -fx-font-weight: bold;"/>
+        <Label fx:id="detailsLabel" text="-"/>
+        <Label text="Montant Final:" style="-fx-font-size: 18px; -fx-text-fill: #FFD700; -fx-font-weight: bold;"/>
+        <Label fx:id="finalAmountLabel" text="-"/>
     </VBox>
 </VBox>
