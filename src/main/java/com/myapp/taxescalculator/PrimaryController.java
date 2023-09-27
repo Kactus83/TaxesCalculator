@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Label;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
@@ -14,7 +16,16 @@ public class PrimaryController {
     private TextField rateTextField;
     
     @FXML
-    private TextField initialValueTextField;
+    private TextField initialValueTextField;  
+    
+    @FXML
+    private Label detailsLabel;
+
+    @FXML
+    private Label finalAmountLabel;
+
+    @FXML
+    private ToggleButton modeToggle;
 
     private Timer rateDelayTimer = null;
     private Timer initialValueDelayTimer = null;
@@ -23,6 +34,7 @@ public class PrimaryController {
     public void initialize() {
         setupRateTextFieldListener();
         setupInitialValueTextFieldListener();
+        modeToggle.selectedProperty().addListener((observable, oldValue, newValue) -> updateAmount());
     }
 
     private void setupRateTextFieldListener() {
@@ -68,6 +80,7 @@ public class PrimaryController {
             try {
                 double rate = Double.parseDouble(rateValue);
                 validateRateAndShowAlert(rate);
+                updateAmount();
             } catch (NumberFormatException e) {
                 showAlert("Erreur d'entrée", "Veuillez entrer un taux valide.");
             }
@@ -79,6 +92,7 @@ public class PrimaryController {
             try {
                 double value = Double.parseDouble(initialValue);
                 validateInitialValueAndShowAlert(value);
+                updateAmount();
             } catch (NumberFormatException e) {
                 showAlert("Erreur d'entrée", "Veuillez entrer une valeur initiale valide.");
             }
@@ -90,16 +104,34 @@ public class PrimaryController {
             showAlert("Erreur de taux", "Le taux ne peut pas être négatif !");
         } else if (rate > 100) {
             showAlert("Erreur de taux", "Le taux ne peut pas dépasser 100% !");
-        } else {
-            showAlert("Modification du taux", "Le taux a été modifié en : " + rate + "%");
         }
     }
 
     private void validateInitialValueAndShowAlert(double value) {
         if (value < 0) {
             showAlert("Erreur de valeur", "La valeur initiale ne peut pas être négative !");
-        } else {
-            showAlert("Modification de la valeur initiale", "La valeur initiale a été modifiée en : " + value);
+        }
+    }
+
+    private void updateAmount() {
+        try {
+            double rate = Double.parseDouble(rateTextField.getText()) / 100; 
+            double initialValue = Double.parseDouble(initialValueTextField.getText());
+            double amountChange = initialValue * rate;
+            double finalAmount;
+
+            if (modeToggle.isSelected()) {
+                finalAmount = initialValue - amountChange;
+                detailsLabel.setText(String.format("Montant du discount: %.2f", amountChange));
+            } else {
+                finalAmount = initialValue + amountChange;
+                detailsLabel.setText(String.format("Montant de la taxe: %.2f", amountChange));
+            }
+            finalAmountLabel.setText(String.format("Montant final: %.2f", finalAmount));
+
+        } catch (NumberFormatException e) {
+            // It's possible to get here if one of the fields is not yet filled or has an illegal value.
+            // In that case, we don't update the result.
         }
     }
 

@@ -7,4 +7,12 @@
     <TextField fx:id="rateTextField" promptText="Taux"/>
     <Label text="Entrez la valeur initiale :"/>
     <TextField fx:id="initialValueTextField" promptText="Valeur initiale"/>
+    
+    <!-- Toggle for Taxe/Discount -->
+    <ToggleButton fx:id="modeToggle" text="Taxe" selected="true"/>
+    
+    <Label text="Détails:"/>
+    <Label fx:id="detailsLabel" text="Les détails seront affichés ici"/>
+    <Label text="Montant Final:"/>
+    <Label fx:id="finalAmountLabel" text="Le montant final sera affiché ici"/>
 </VBox>
