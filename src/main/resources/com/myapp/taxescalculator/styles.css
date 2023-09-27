@@ -1,0 +1,46 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 27 sept. 2023, 13:58:46
+    Author     : Flo
+*/
+
+.root {
+    /* Couleurs de fond sombres typiques des thèmes de jeu */
+    -fx-background-color: #121212;
+    -fx-font-family: "Arial", sans-serif; /* Vous pouvez utiliser d'autres polices pour un effet plus moderne */
+    -fx-text-fill: #FFFFFF; /* Couleur du texte blanche pour contraster avec le fond sombre */
+}
+
+/* Pour mettre en valeur certains éléments */
+.label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #E0E0E0;
+}
+
+/* Style pour les champs de texte */
+.text-field {
+    -fx-background-color: #333333;
+    -fx-prompt-text-fill: #888888; 
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #666666;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 8px;
+}
+
+/* Bouton d'alternance avec des couleurs vives pour la mise en évidence */
+.toggle-button {
+    -fx-background-color: #007BFF;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 16px;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #34C634;
+}

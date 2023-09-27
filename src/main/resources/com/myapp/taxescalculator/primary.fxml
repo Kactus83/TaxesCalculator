@@ -2,14 +2,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.myapp.taxescalculator.PrimaryController">
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.myapp.taxescalculator.PrimaryController" stylesheets="@styles.css">
     <Label text="Entrez le taux :"/>
     <TextField fx:id="rateTextField" promptText="Taux"/>
     <Label text="Entrez la valeur initiale :"/>
     <TextField fx:id="initialValueTextField" promptText="Valeur initiale"/>
     
     <!-- Toggle for Taxe/Discount -->
-    <ToggleButton fx:id="modeToggle" text="Taxe" selected="true"/>
+    <ToggleButton fx:id="modeToggle" text="Taxe or Discount" selected="true"/>
     
     <Label text="Détails:"/>
     <Label fx:id="detailsLabel" text="Les détails seront affichés ici"/>
