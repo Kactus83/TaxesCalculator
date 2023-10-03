@@ -1,5 +1,6 @@
 package com.myapp.taxescalculator;
 
+import java.io.IOException;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -33,6 +34,12 @@ public class PrimaryController {
     private static final double MAX_RATE = 100.0;
     private static final double MIN_INITIAL_VALUE = 0.0;
 
+       
+    @FXML
+    private void goToHome() throws IOException {
+        App.setRoot("homepage");
+    }
+    
     @FXML
     public void initialize() {
         setupRateTextFieldListener();

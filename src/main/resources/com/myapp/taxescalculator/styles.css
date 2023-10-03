@@ -44,3 +44,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .toggle-button:selected {
     -fx-background-color: #34C634;
 }
+
+.button {
+    -fx-background-color: #FFD700;  /* jaune */
+    -fx-text-fill: #000000;  /* noir */
+    -fx-border-color: #FFD700;  /* jaune */
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #FFC700;  /* jaune un peu plus foncé au survol */
+}
+
+.button:pressed {
+    -fx-background-color: #FFA700;  /* jaune encore plus foncé quand le bouton est pressé */
+}
+
+.button:focused {
+    -fx-border-color: #FFFFFF;  /* bordure blanche pour la mise au point */
+}
